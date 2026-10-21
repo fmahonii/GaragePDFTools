@@ -1,0 +1,26 @@
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Extract Android project ZIP
+        run: |
+          unzip -o GaragePDFTools_Android_Project.zip -d extracted
+          find extracted -maxdepth 4 -type f | head -100
+
+      - name: Show project structure
+        run: |
+          find extracted -name 'build.gradle*' -o -name 'settings.gradle*' -o -name 'gradlew'
